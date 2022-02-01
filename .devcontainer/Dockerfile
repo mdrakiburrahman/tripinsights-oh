@@ -66,6 +66,14 @@ RUN echo "Installing mssql-tools" \
     && apt-get update \
     && ACCEPT_EULA=Y apt-get -y install unixodbc-dev msodbcsql17 libunwind8 mssql-tools
 
+# Install kubectx
+ENV VERSION "0.9.4"
+RUN echo "Installing kubectx" \
+    && curl -L -o /usr/local/bin/kubectx https://raw.githubusercontent.com/ahmetb/kubectx/v${VERSION}/kubectx \
+	&& curl -L -o /usr/local/bin/kubens https://raw.githubusercontent.com/ahmetb/kubectx/v${VERSION}/kubens \
+    && chmod +x /usr/local/bin/kubectx \
+    && chmod +x /usr/local/bin/kubens
+
 RUN echo "Installing sqlpackage" \
     && curl -sSL -o sqlpackage.zip "https://aka.ms/sqlpackage-linux" \
     && mkdir /opt/sqlpackage \
