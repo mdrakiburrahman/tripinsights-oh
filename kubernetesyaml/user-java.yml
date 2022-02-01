@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: userjava
+  labels:
+    app: userjava
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: userjava
+  template:
+    metadata:
+      labels:
+        app: userjava
+    spec:
+      containers:
+      - name: userjava
+        image: registryvpc6526.azurecr.io/tripinsights/user-java:1.0
+        ports:
+        - containerPort: 80
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: userjava-svc
+spec:
+  ports:
+  - port: 80
+  selector:
+    app: userjava
