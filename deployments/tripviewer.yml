@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: tripviewer
+  namespace: web
   labels:
     app: tripviewer
 spec:
@@ -21,15 +22,16 @@ spec:
         - containerPort: 80
         env:
           - name: USERPROFILE_API_ENDPOINT
-            value: http://userprofile-svc.tripinsights.svc.cluster.local/api/user
+            value: http://userprofile-svc.api.svc.cluster.local/api/user
           - name: TRIPS_API_ENDPOINT
-            value: http://trips-svc.tripinsights.svc.cluster.local
+            value: http://trips-svc.api.svc.cluster.local
 ---
 
 apiVersion: v1
 kind: Service
 metadata:
   name: tripviewer-svc
+  namespace: web
 spec:
   type: LoadBalancer
   ports:
