@@ -33,7 +33,6 @@ spec:
           - name: TRIPS_API_ENDPOINT
             value: http://trips-svc.api.svc.cluster.local
 ---
-
 apiVersion: v1
 kind: Service
 metadata:

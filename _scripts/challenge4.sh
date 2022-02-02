@@ -31,3 +31,12 @@ kubectl apply -f api-viewer.yaml
 # Read access to API NS
 
 # Create rolebinding
+cd ../roleBinding 
+kubectl apply -f web-dev-binding.yaml
+
+# Create roles
+cd ../roles
+kubectl apply -f api-admin.yaml
+kubectl apply -f api-viewer.yaml
+kubectl apply -f web-admin.yaml
+kubectl apply -f web-viewer.yaml
