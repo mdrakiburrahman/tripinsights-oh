@@ -6,7 +6,7 @@ metadata:
   labels:
     app: tripviewer
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: tripviewer
@@ -20,6 +20,13 @@ spec:
         image: registryvpc6526.azurecr.io/tripinsights/tripviewer:1.0
         ports:
         - containerPort: 80
+        resources:
+           limits:
+             memory: 600Mi
+             cpu: 2000m
+           requests:
+             memory: 300Mi
+             cpu: 500m
         env:
           - name: USERPROFILE_API_ENDPOINT
             value: http://userprofile-svc.api.svc.cluster.local/api/user
