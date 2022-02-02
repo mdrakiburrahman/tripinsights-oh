@@ -41,5 +41,5 @@ kubectl apply -f api-viewer.yaml
 kubectl apply -f web-admin.yaml
 kubectl apply -f web-viewer.yaml
 
-# Create busybox pod
+# Create busybox pod for testing
 kubectl run -i --tty --rm debug --image=busybox --restart=Never -- sh
