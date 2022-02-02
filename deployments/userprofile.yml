@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: userprofile-deployment
+  namespace: tripinsights
+  labels:
+    deploy: userprofile-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: userprofile
+  template:
+    metadata:
+      labels:
+        app: userprofile
+    spec:
+      containers:
+      - image: registryvpc6526.azurecr.io/tripinsights/userprofile:1.0
+        imagePullPolicy: Always
+        name: userprofile
+        resources:
+           limits:
+             memory: 600Mi
+             cpu: 2000m
+           requests:
+             memory: 300Mi
+             cpu: 500m
+        ports:
+          - containerPort: 80
+            name: http
+            protocol: TCP
+        envFrom:
+        - secretRef:
+            name: secret-sql-connection
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: userprofile-svc
+  namespace: tripinsights
+spec:
+  type: ClusterIP
+  selector:
+    app: userprofile
+  ports:
+    - protocol: TCP
+      name: userprofile-http
+      port: 80
+      targetPort: 80

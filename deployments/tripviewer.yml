@@ -19,7 +19,11 @@ spec:
         image: registryvpc6526.azurecr.io/tripinsights/tripviewer:1.0
         ports:
         - containerPort: 80
-        
+        env:
+          - name: USERPROFILE_API_ENDPOINT
+            value: http://userprofile-svc.tripinsights.svc.cluster.local/api/user
+          - name: TRIPS_API_ENDPOINT
+            value: http://trips-svc.tripinsights.svc.cluster.local
 ---
 
 apiVersion: v1
@@ -30,7 +34,7 @@ spec:
   type: LoadBalancer
   ports:
   - port: 80
+    protocol: TCP
+    targetPort: 80
   selector:
-    app: trip-viewer
-
-
+    app: tripviewer

@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: trips
+  labels:
+    app: trips
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: trips
+  template:
+    metadata:
+      labels:
+        app: trips
+    spec:
+      containers:
+      - name: trips
+        image: registryvpc6526.azurecr.io/tripinsights/trips:1.0
+        ports:
+        - containerPort: 80
+        resources:
+           limits:
+             memory: 600Mi
+             cpu: 2000m
+           requests:
+             memory: 300Mi
+             cpu: 500m
+        envFrom:
+        - secretRef:
+            name: secret-sql-connection      
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: trips-svc
+spec:
+  ports:
+  - port: 80
+  selector:
+    app: trips
