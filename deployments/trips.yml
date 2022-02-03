@@ -31,13 +31,13 @@ spec:
         image: registryvpc6526.azurecr.io/tripinsights/trips:1.0
         ports:
         - containerPort: 80
-        resources:
-           limits:
-             memory: 600Mi
-             cpu: 2000m
-           requests:
-             memory: 300Mi
-             cpu: 500m
+        # resources:
+        #    limits:
+        #      memory: 600Mi
+        #      cpu: 2000m
+        #    requests:
+        #      memory: 300Mi
+        #      cpu: 500m
  
 ---
 apiVersion: v1
