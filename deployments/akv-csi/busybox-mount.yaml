@@ -2,6 +2,7 @@ kind: Pod
 apiVersion: v1
 metadata:
   name: busybox-secrets-store-inline
+  namespace: api
 spec:
   containers:
   - name: busybox
@@ -19,6 +20,6 @@ spec:
         driver: secrets-store.csi.k8s.io
         readOnly: true
         volumeAttributes:
-          secretProviderClass: "azure-kvname"
-        nodePublishSecretRef:                       # Only required when using service principal mode
-          name: secrets-store-creds                 # Only required when using service principal mod
+          secretProviderClass: "azure-kvname-system-msi"
+#        nodePublishSecretRef:                       # Only required when using service principal mode
+#          name: secrets-store-creds                 # Only required when using service principal mod
