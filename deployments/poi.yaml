@@ -15,10 +15,21 @@ spec:
       labels:
         app: poi
     spec:
+      volumes:
+      - name: secrets-store-inline
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: "azure-kvname-system-msi"
       containers:
       - image: registryvpc6526.azurecr.io/tripinsights/poi:latest
         imagePullPolicy: Always
         name: poi
+        volumeMounts:
+        - name: secrets-store-inline
+          mountPath: "/secrets"
+          readOnly: true
         resources:
            limits:
              memory: 600Mi
@@ -37,9 +48,6 @@ spec:
             value: '8080'
           - name: ASPNETCORE_ENVIRONMENT
             value: 'Production'
-        envFrom:
-        - secretRef:
-            name: secret-sql-connection
 ---
 apiVersion: v1
 kind: Service

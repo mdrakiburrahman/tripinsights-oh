@@ -4,9 +4,9 @@ metadata:
   name: userjava
   labels:
     app: userjava
-    namespace: api
+  namespace: api
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: userjava
@@ -15,8 +15,19 @@ spec:
       labels:
         app: userjava
     spec:
+      volumes:
+      - name: secrets-store-inline
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: "azure-kvname-system-msi"
       containers:
       - name: userjava
+        volumeMounts:
+        - name: secrets-store-inline
+          mountPath: "/secrets"
+          readOnly: true
         image: registryvpc6526.azurecr.io/tripinsights/user-java:1.0
         ports:
         - containerPort: 80
